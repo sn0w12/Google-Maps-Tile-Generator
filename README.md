@@ -15,8 +15,12 @@ This Python script generates Google Maps tiles from a given image and compresses
 - tqdm
 
 ## Installation
+Git clone the repo
+```
+git clone https://github.com/sn0w12/Google-Maps-Tile-Generator
+```
 
-Before running the script, ensure you have Python installed and the necessary packages. You can install the required packages using:
+Before running the script, ensure you have Python installed. You can install the required packages using:
 
 ```
 pip install -r requirements.txt
@@ -44,7 +48,7 @@ Arguments:
 - `--background_color`: Background color for the image. Can be 'transparent' or a hex code without '#'. Default is 'transparent'.
 - `--compress`: Add if you want to compress all of the images after the run.
 
-### Graphical User Interface
+### User Interface
 
 If the script is run without any arguments, it will prompt the user to select the input image and output directory through a GUI dialog. Then it will prompt the user for the min zoom, max zoom and background color in the console.
 
