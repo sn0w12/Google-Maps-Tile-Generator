@@ -1,8 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
 
-CALL "C:\ProgramData\anaconda3\Scripts\activate.bat"
-
 python check_dependencies.py > missing_packages.txt
 SET DEPENDENCY_CHECK=%ERRORLEVEL%
 IF !DEPENDENCY_CHECK! EQU 1 (
