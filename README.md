@@ -1,11 +1,11 @@
 # Google Maps Tile Generator
 
-This Python script generates Google Maps tiles from a given image and compresses all PNG images within a specified directory. It's designed to run either through a command line interface (CLI) with arguments or interactively with a graphical user interface (GUI).
+This Python script generates Google Maps/ Leaflet tiles from a given image and compresses all PNG images within a specified directory. It's designed to run either through a command line interface with arguments or interactively with a user interface.
 
 ## Features
 
-- Generate Google Maps tiles at specified zoom levels.
-- Compress PNG images to reduce file size with customizable quality settings.
+- Generate Map tiles at specified zoom levels.
+- Compress PNG images to reduce file size.
 - Support for both command line and GUI operations.
 
 ## Requirements
@@ -36,7 +36,7 @@ Or simply run the run.bat file, it should automatically detect the dependencies 
 To run the script with command line arguments:
 
 ```
-python map.py -i <input_image_path> -o <output_directory> --min_zoom <min_zoom> --max_zoom <max_zoom> --background_color <background_color>  --compress
+python map.py -i <input_image_path> -o <output_directory> --min_zoom <min_zoom> --max_zoom <max_zoom> --background_color <background_color> --compress
 ```
 
 
