@@ -11,11 +11,11 @@ def compress_image(file_path):
         with Image.open(file_path) as img:
             img.save(file_path, "PNG", optimize=True, quality=65)
     except Exception as e:
-        logging.error(f"Error compressing {file_path}: {e}")
+        print(f"Error compressing {file_path}: {e}")
 
 def compress_all_images(directory):
     if not directory:  # If no directory is selected, exit the script
-        logging.info("No directory selected. Exiting...")
+        print("No directory selected. Exiting...")
         return
 
     # Find all PNG images within the specified directory
