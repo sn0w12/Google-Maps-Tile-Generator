@@ -3,8 +3,9 @@ import argparse
 import os
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
+import multiprocessing
 
-def make_square(image, border_color=(0, 0, 0, 0)):  # Default to transparent
+def make_square(image, border_color=(0, 0, 0, 0)):
     x, y = image.size
     size = max(x, y)
     new_image = Image.new("RGBA", (size, size), color=border_color)
@@ -42,11 +43,17 @@ def slice_and_save_image(image, zoom_level, output_directory, border_color):
             tile_filename = f"{output_dir}/{y}.png"
             tasks.append((tile, tile_filename))
     
-    with ThreadPoolExecutor() as executor:
+    with ThreadPoolExecutor(max_workers=min(32, multiprocessing.cpu_count() + 4)) as executor:
         list(tqdm(executor.map(save_tile, tasks), total=len(tasks), desc=f"Processing zoom level {zoom_level}"))
 
+def parse_color_argument(border_color_arg):
+    if border_color_arg.lower() == 'transparent':
+        return (0, 0, 0, 0)
+    else:
+        return tuple(int(border_color_arg[i:i+2], 16) for i in (0, 2, 4)) + (255,)
+
 def create_google_maps_tiles(input_image_path, output_directory, min_zoom, max_zoom, border_color):
-    image = Image.open(input_image_path).convert("RGBA")  # Ensure image is in RGBA for transparency
+    image = Image.open(input_image_path).convert("RGBA")
     for zoom_level in range(min_zoom, max_zoom + 1):
         slice_and_save_image(image, zoom_level, output_directory, border_color)
 
@@ -56,14 +63,10 @@ def main():
     parser.add_argument('output_directory', type=str, help='Path to the output directory.')
     parser.add_argument('--min_zoom', type=int, default=0, help='Minimum zoom level.')
     parser.add_argument('--max_zoom', type=int, default=5, help='Maximum zoom level.')
-    parser.add_argument('--border_color', type=str, default='transparent', help='Border color (transparent, or a hex code without #).')
+    parser.add_argument('--border_color', type=str, default='transparent', help='Border color.')
 
     args = parser.parse_args()
-    
-    if args.border_color.lower() == 'transparent':
-        border_color = (0, 0, 0, 0)  # Transparent
-    else:
-        border_color = tuple(int(args.border_color[i:i+2], 16) for i in (0, 2, 4)) + (255,)  # Convert hex to RGBA
+    border_color = parse_color_argument(args.border_color)
     
     create_google_maps_tiles(args.input_image_path, args.output_directory, args.min_zoom, args.max_zoom, border_color)
 

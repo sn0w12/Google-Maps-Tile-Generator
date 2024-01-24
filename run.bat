@@ -15,13 +15,8 @@ set /p maxZoom="Maximum zoom level: "
 
 python map.py "%inputImagePath%" "%outputDirectory%" --min_zoom %minZoom% --max_zoom %maxZoom%
 
-REM Path to pngquant executable
-set "PNGQUANT_PATH=C:\pngquant\pngquant.exe"
-
-echo Compressing all images in %OutputDirectory%
-for /r %OutputDirectory% %%i in (*.png) do (
-    "%PNGQUANT_PATH%" --force --skip-if-larger --output "%%i" -- "%%i"
-)
+echo Compressing all images in %outputDirectory%
+python compress_images.py "%outputDirectory%"
 
 echo Script execution completed.
 pause
