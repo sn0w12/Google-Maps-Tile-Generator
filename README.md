@@ -1,4 +1,4 @@
-# Google Maps Tile Generator and Image Compressor
+# Google Maps Tile Generator
 
 This Python script generates Google Maps tiles from a given image and compresses all PNG images within a specified directory. It's designed to run either through a command line interface (CLI) with arguments or interactively with a graphical user interface (GUI).
 
