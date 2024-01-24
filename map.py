@@ -63,7 +63,7 @@ def main():
     parser.add_argument('output_directory', type=str, help='Path to the output directory.')
     parser.add_argument('--min_zoom', type=int, default=0, help='Minimum zoom level.')
     parser.add_argument('--max_zoom', type=int, default=5, help='Maximum zoom level.')
-    parser.add_argument('--border_color', type=str, default='transparent', help='Border color.')
+    parser.add_argument('--border_color', type=str, default='transparent', help='Background color (transparent, or a hex code without #).')
 
     args = parser.parse_args()
     border_color = parse_color_argument(args.border_color)
