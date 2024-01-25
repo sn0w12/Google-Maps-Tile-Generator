@@ -1,8 +1,11 @@
-import pkg_resources
 import sys
+try:
+    from importlib import metadata
+except ImportError:
+    import importlib_metadata as metadata
 
 def get_installed_packages():
-    return {pkg.key for pkg in pkg_resources.working_set}
+    return {dist.metadata['Name'].lower() for dist in metadata.distributions()}
 
 def read_requirements_file(filepath):
     with open(filepath, 'r') as file:

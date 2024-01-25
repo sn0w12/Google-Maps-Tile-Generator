@@ -13,8 +13,44 @@ This Python script generates Google Maps/ Leaflet tiles from a given image and c
 - Python 3.x
 - Pillow (PIL Fork)
 - tqdm
+- pngquant
 
 ## Installation
+
+### Installing pngquant
+
+#### Windows
+
+1. **Download pngquant**: Visit the pngquant website at https://pngquant.org/ and download the latest version for Windows.
+2. **Extract the ZIP File**: Once downloaded, extract the ZIP file to a location on your computer, such as `C:\Program Files\pngquant`.
+3. **Add to PATH**: To use pngquant from the command line, you need to add it to your system's PATH environment variable.
+   - Right-click on **This PC** or **My Computer** and select **Properties**.
+   - Click on **Advanced system settings** and then on the **Environment Variables** button.
+   - In the System Variables section, scroll down and select the **Path** variable, then click **Edit**.
+   - Click **New** and add the path to the folder where you extracted pngquant (e.g., `C:\Program Files\pngquant`).
+   - Click **OK** to close all dialogs.
+
+#### macOS
+
+1. **Install Homebrew**: If not already installed, install Homebrew by pasting the following command in a terminal:
+   ```
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+   ```
+2. **Install pngquant**: With Homebrew installed, run the following command to install pngquant:
+   ```
+   brew install pngquant
+   ```
+
+#### Linux (Ubuntu/Debian)
+
+1. **Install pngquant**: Open a terminal and run the following command to install pngquant:
+   ```
+   sudo apt-get update && sudo apt-get install pngquant
+   ```
+
+### Google-Maps-Tile-Generator
+
+
 Git clone the repo
 ```
 git clone https://github.com/sn0w12/Google-Maps-Tile-Generator
@@ -45,7 +81,7 @@ Arguments:
 - `-o` or `--output_directory`: Path to the output directory for the tiles.
 - `--min_zoom`: Minimum zoom level (0).
 - `--max_zoom`: Maximum zoom level.
-- `--background_color`: Background color for the image. Can be 'transparent' or a hex code without '#'. Default is 'transparent'.
+- `--background_color`: Background color for the image. Can be 'transparent' or a hex code without '#'.
 
 ### User Interface
 

@@ -5,11 +5,12 @@ import os
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import multiprocessing
+import subprocess
 
 def compress_image(file_path):
     try:
-        with Image.open(file_path) as img:
-            img.save(file_path, "PNG", optimize=True, quality=65)
+        command = ["pngquant", "--force", "--output", file_path, "--quality=0-99", "--floyd=0.5", "--speed=1", file_path]
+        subprocess.run(command, check=True)
     except Exception as e:
         print(f"Error compressing {file_path}: {e}")
 
