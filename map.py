@@ -9,7 +9,7 @@ import subprocess
 
 def compress_image(file_path):
     try:
-        command = ["pngquant", "--force", "--output", file_path, "--quality=0-99", "--floyd=0.5", "--speed=1", file_path]
+        command = ["pngquant", "--force", "--output", file_path, "--quality=0-90", "--floyd=0.5", "--speed=1", file_path]
         subprocess.run(command, check=True)
     except Exception as e:
         print(f"Error compressing {file_path}: {e}")
