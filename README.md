@@ -89,7 +89,7 @@ If the script is run without any arguments, it will prompt the user to select th
 
 ### Image Compression
 
-After generating tiles, the script automatically compresses all PNG images in the output directory to optimize for web usage.
+After generating tiles the script will ask you if you want to compress the images, if you say yes it automatically compresses all PNG images in the output directory to optimize for web usage.
 
 ## Note
 
