@@ -102,7 +102,6 @@ def main():
     parser.add_argument('--min_zoom', type=int, help='Minimum zoom level.')
     parser.add_argument('--max_zoom', type=int, help='Maximum zoom level.')
     parser.add_argument('--background_color', type=str, help='Background color (transparent, or a hex code without #).')
-    parser.add_argument('--compress', action='store_true', help='Compress images after processing.')
 
     args = parser.parse_args()
 
@@ -121,10 +120,8 @@ def main():
     create_google_maps_tiles(input_image_path, output_directory, min_zoom, max_zoom, background_color)
 
     # Ask for compression if not specified in command-line arguments
-    compress_images = args.compress
-    if not args.compress:
-        compress_response = input("Do you want to compress the images? (yes/no): ").lower()
-        compress_images = compress_response in ['yes', 'y']
+    compress_response = input("Do you want to compress the images? [Y/n]: ").lower()
+    compress_images = compress_response in ['yes', 'y']
 
     if compress_images:
         compress_all_images(output_directory)

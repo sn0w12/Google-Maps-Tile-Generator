@@ -36,7 +36,7 @@ Or simply run the run.bat file, it should automatically detect the dependencies 
 To run the script with command line arguments:
 
 ```
-python map.py -i <input_image_path> -o <output_directory> --min_zoom <min_zoom> --max_zoom <max_zoom> --background_color <background_color> --compress
+python map.py -i <input_image_path> -o <output_directory> --min_zoom <min_zoom> --max_zoom <max_zoom> --background_color <background_color>
 ```
 
 
@@ -46,7 +46,6 @@ Arguments:
 - `--min_zoom`: Minimum zoom level (0).
 - `--max_zoom`: Maximum zoom level.
 - `--background_color`: Background color for the image. Can be 'transparent' or a hex code without '#'. Default is 'transparent'.
-- `--compress`: Add if you want to compress all of the images after the run.
 
 ### User Interface
 
