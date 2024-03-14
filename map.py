@@ -117,12 +117,11 @@ def main():
     min_zoom = args.min_zoom if args.min_zoom is not None else int(input("Please enter the minimum zoom level (usually 0): "))
     max_zoom = args.max_zoom if args.max_zoom is not None else int(input("Please enter the maximum zoom level: "))
     background_color = parse_color_argument(args.background_color if args.background_color is not None else input("Enter background color (transparent or hex code without #): "))
-    
-    create_google_maps_tiles(input_image_path, output_directory, min_zoom, max_zoom, background_color)
-
     # Ask for compression if not specified in command-line arguments
     compress_response = input("Do you want to compress the images? [Y/n]: ").lower()
     compress_images = compress_response in ['yes', 'y']
+    
+    create_google_maps_tiles(input_image_path, output_directory, min_zoom, max_zoom, background_color)
 
     if compress_images:
         compress_all_images(output_directory)
