@@ -63,33 +63,41 @@ def save_tile(tile_data):
     tile, tile_filename = tile_data
     tile.save(tile_filename)
 
-def slice_and_save_image(image, zoom_level, output_directory, background_color):
-    tile_size = 256
-    scaled_image = scale_image(image, zoom_level, background_color)
-    num_tiles = 2 ** zoom_level
-    tasks = []
-
-    for x in range(num_tiles):
-        for y in range(num_tiles):
-            left = x * tile_size
-            upper = y * tile_size
-            right = left + tile_size
-            lower = upper + tile_size
-            
-            tile = scaled_image.crop((left, upper, right, lower))
-            output_dir = f"{output_directory}/{zoom_level}/{x}"
-            os.makedirs(output_dir, exist_ok=True)
-            tile_filename = f"{output_dir}/{y}.png"
-            tasks.append((tile, tile_filename))
-    
-    with ThreadPoolExecutor(max_workers=min(32, multiprocessing.cpu_count() + 4)) as executor:
-        list(tqdm(executor.map(save_tile, tasks), total=len(tasks), desc=f"Processing zoom level {zoom_level}"))
-
 def parse_color_argument(background_color_arg):
     if background_color_arg.lower() == 'transparent' or background_color_arg == "":
         return (0, 0, 0, 0)
     else:
         return tuple(int(background_color_arg[i:i+2], 16) for i in (0, 2, 4)) + (255,)
+
+def slice_and_save_task(scaled_image, zoom_level, x, y, tile_size, output_directory, background_color):
+    left = x * tile_size
+    upper = y * tile_size
+    right = left + tile_size
+    lower = upper + tile_size
+    
+    tile = scaled_image.crop((left, upper, right, lower))
+    output_dir = f"{output_directory}/{zoom_level}/{x}"
+    os.makedirs(output_dir, exist_ok=True)
+    tile_filename = f"{output_dir}/{y}.png"
+    tile.save(tile_filename)
+
+def slice_and_save_image(image, zoom_level, output_directory, background_color):
+    tile_size = 256
+    scaled_image = scale_image(image, zoom_level, background_color)
+    num_tiles = 2 ** zoom_level
+
+    tasks = []
+    with ThreadPoolExecutor(max_workers=min(32, multiprocessing.cpu_count() + 4)) as executor:
+        for x in range(num_tiles):
+            for y in range(num_tiles):
+                tasks.append(
+                    executor.submit(
+                        slice_and_save_task, scaled_image, zoom_level, x, y, tile_size, output_directory, background_color
+                    )
+                )
+        # Using tqdm to show progress
+        for task in tqdm(tasks, total=len(tasks), desc=f"Processing zoom level {zoom_level}"):
+            task.result()  # Ensure all tasks are completed
 
 def create_google_maps_tiles(input_image_path, output_directory, min_zoom, max_zoom, background_color):
     image = Image.open(input_image_path).convert("RGBA")
